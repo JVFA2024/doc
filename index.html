@@ -457,12 +457,23 @@
                      </section>
                   </header>
                   <section class="docs-section" id="item-4-1">
-                     <h2 class="section-heading">Section Item 4.1</h2>
-                     <p>Vivamus efficitur fringilla ullamcorper. Cras condimentum condimentum mauris, vitae facilisis leo.
-                        Aliquam sagittis purus nisi, at commodo augue convallis id. Sed interdum turpis quis felis bibendum
-                        imperdiet. Mauris pellentesque urna eu leo gravida iaculis. In fringilla odio in felis ultricies
-                        porttitor. Donec at purus libero. Vestibulum libero orci, commodo nec arcu sit amet, commodo sollicitudin
-                        est. Vestibulum ultricies malesuada tempor.
+                     <h2 class="section-heading">APIs</h2>
+                     <h4>Login route</h4>
+                     <p>
+                        app.post('/login', async (req, res) => {
+  console.log("login successfully");  
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username }); // Find user by username
+    if (!user || !(await user.comparePassword(password))) {
+      return res.status(401).send({ error: 'Login failed!' });
+    }
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    res.send({ user, token });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
                      </p>
                                    <pre class="shadow-lg rounded"><code class="language-json hljs">[
   {
