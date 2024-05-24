@@ -503,30 +503,33 @@
                      <h1 class="docs-heading">Security Measures</h1>
                      <section class="docs-intro">
 <ol>
-    <li>
-      <strong>Data Encryption:</strong><br>
-      All communications between the user and JVFA are encrypted using industry-standard encryption protocols (such as SSL/TLS) to protect sensitive information from unauthorized access.
-    </li>
-    <li>
-      <strong>Authentication Mechanisms:</strong><br>
-      Users are required to authenticate themselves using secure methods such as OTP (One-Time Password) sent to their registered mobile number or biometric authentication before accessing personal account information or performing sensitive transactions.
-    </li>
-    <li>
-      <strong>Role-Based Access Control:</strong><br>
-      Access to different features and functionalities within JVFA is restricted based on the user's role and permissions. For example, only authorized personnel have access to sensitive financial data or administrative functions.
-    </li>
-    <li>
-      <strong>Audit Trails:</strong><br>
-      JVFA maintains detailed audit trails of user activities, including login attempts, transactions, and data access, to facilitate monitoring, tracking, and investigation of security incidents or unauthorized access.
-    </li>
-    <li>
-      <strong>Regular Security Audits and Updates:</strong><br>
-      The JVFA platform undergoes regular security audits and assessments to identify and mitigate potential vulnerabilities. Security patches and updates are applied promptly to address any security weaknesses or emerging threats.
-    </li>
-    <li>
-      <strong>Data Privacy Compliance:</strong><br>
-      JVFA adheres to strict data privacy regulations and best practices to ensure the confidentiality, integrity, and availability of user data. Personal information is handled in accordance with applicable privacy laws, and measures are in place to prevent unauthorized disclosure or misuse of data.
-    </li>
+        <ul>
+        <li>
+            <h2>JWT Authentication</h2>
+            <ul>
+                <li><strong>Purpose:</strong> Enhances security by ensuring that only authenticated users can access sensitive banking information such as account balances, spending habits, and transaction details.</li>
+                <li><strong>Implementation:</strong> We utilize JSON Web Tokens (JWT) to manage sessions and authorize user actions. The token is generated upon successful user login via the chatbot and must be provided in the header of subsequent requests to access protected endpoints.</li>
+            </ul>
+        </li>
+        
+        <li>
+            <h2>Environment Variables</h2>
+            <ul>
+                <li><strong>Purpose:</strong> Protects sensitive configuration options and credentials from being exposed in the source code.</li>
+                <li><strong>Implementation:</strong> We store critical information such as the database URI (<code>DB_URI</code>) and the JWT secret key (<code>JWT_SECRET</code>) in a <code>.env</code> file. This approach ensures that our application's configuration remains secure and can be easily modified without code changes.</li>
+            </ul>
+        </li>
+        
+        <li>
+            <h2>Private Routes</h2>
+            <ul>
+                <li><strong>Purpose:</strong> Prevents unauthorized access to the main application page, ensuring that it is accessible only to users who are logged in.</li>
+                <li><strong>Implementation:</strong> The <code>PrivateRoute</code> component in our routing setup acts as a middleware to verify the presence of a valid JWT in the user's session. If the verification fails, the route redirects the user to the login page, thus safeguarding sensitive user interfaces.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <p>These measures are part of our commitment to maintaining a secure and trustworthy environment for our users, ensuring that their financial information is protected from unauthorized access.</p>
   </ol>
 
                      </section>
