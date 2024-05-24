@@ -271,14 +271,6 @@
                   </li>
                                     <li class="nav-item section-title">
                      <a class="nav-link scrollto" href="#section-5">Security Measures</a>
-                     <ul class="nav flex-column mt-2 lvl2">
-                        <li class="nav-item">
-                           <a class="nav-link scrollto" href="#item-5-1">Section Item 5.1</a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link scrollto" href="#item-5-2">Section Item 5.2</a>
-                        </li>
-                     </ul>
                   </li>
                </ul>
             </nav>
@@ -446,57 +438,13 @@
                </article>
                <article class="docs-article" id="section-4">
                   <header class="docs-header">
-                     <h1 class="docs-heading">APIs & Integrations xxxxxxx</h1>
+                     <h1 class="docs-heading">APIs & Integrations</h1>
                      <section class="docs-intro">
-                        <p>Section intro goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque finibus
-                           condimentum nisl id vulputate. Praesent aliquet varius eros interdum suscipit. Donec eu purus sed nibh
-                           convallis bibendum quis vitae turpis. Duis vestibulum diam lorem, vitae dapibus nibh facilisis a. Fusce
-                           in malesuada odio.
-                        </p>
+    <p>To facilitate easy integration and expandability, <strong>JVFA</strong> offers a comprehensive API accessible via Postman. For detailed API documentation, including endpoints, request formats, and examples, please refer to our <a href="https://jvfa00.postman.co/workspace/5e7c34fd-eab4-4c30-86fd-05f642548881/documentation/29494008-413d7883-0e30-425a-9dbc-1d06be16f438">Postman API Documentation</a>.</p>
                      </section>
                   </header>
-                  <section class="docs-section" id="item-4-1">
-                     <h2 class="section-heading">APIs</h2>
-                     <h4>Login route</h4>
-                     <p>
-                        app.post('/login', async (req, res) => {
-  console.log("login successfully");  
-  try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username }); // Find user by username
-    if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).send({ error: 'Login failed!' });
-    }
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
-    res.send({ user, token });
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
-                     </p>
-                                   <pre class="shadow-lg rounded"><code class="language-json hljs">[
-  {
-    <span class="hljs-attr">"title"</span>: <span class="hljs-string">"apples"</span>,
-    <span class="hljs-attr">"count"</span>: [<span class="hljs-number">12000</span>, <span class="hljs-number">20000</span>],
-    <span class="hljs-attr">"description"</span>: {<span class="hljs-attr">"text"</span>: <span class="hljs-string">"..."</span>, <span class="hljs-attr">"sensitive"</span>: <span class="hljs-literal">false</span>}
-  },
-  {
-    <span class="hljs-attr">"title"</span>: <span class="hljs-string">"oranges"</span>,
-    <span class="hljs-attr">"count"</span>: [<span class="hljs-number">17500</span>, <span class="hljs-literal">null</span>],
-    <span class="hljs-attr">"description"</span>: {<span class="hljs-attr">"text"</span>: <span class="hljs-string">"..."</span>, <span class="hljs-attr">"sensitive"</span>: <span class="hljs-literal">false</span>}
-  }
-]</code></pre>
-                  </section>
-                  <section class="docs-section" id="item-4-2">
-                     <h2 class="section-heading">Section Item 4.2</h2>
-                     <p>Vivamus efficitur fringilla ullamcorper. Cras condimentum condimentum mauris, vitae facilisis leo.
-                        Aliquam sagittis purus nisi, at commodo augue convallis id. Sed interdum turpis quis felis bibendum
-                        imperdiet. Mauris pellentesque urna eu leo gravida iaculis. In fringilla odio in felis ultricies
-                        porttitor. Donec at purus libero. Vestibulum libero orci, commodo nec arcu sit amet, commodo sollicitudin
-                        est. Vestibulum ultricies malesuada tempor.
-                     </p>
-                  </section>
                   
+              
                </article>
                <article class="docs-article" id="section-5">
                   <header class="docs-header">
@@ -505,28 +453,30 @@
 <ol>
         <ul>
         <li>
-            <h2>JWT Authentication</h2>
+            <h4>JWT Authentication</h4>
             <ul>
                 <li><strong>Purpose:</strong> Enhances security by ensuring that only authenticated users can access sensitive banking information such as account balances, spending habits, and transaction details.</li>
-                <li><strong>Implementation:</strong> We utilize JSON Web Tokens (JWT) to manage sessions and authorize user actions. The token is generated upon successful user login via the chatbot and must be provided in the header of subsequent requests to access protected endpoints.</li>
+                <li><strong>Implementation:</strong> We utilize JSON Web Tokens (JWT) to manage sessions and authorize user actions. The token is generated upon successful user login via the JVFA and must be provided in the header of subsequent requests to access protected endpoints.</li>
+            </ul>
+        </li>
+     
+           <li>
+            <h4>Private Routes</h4>
+            <ul>
+                <li><strong>Purpose:</strong> Prevents unauthorized access to the main application page, ensuring that it is accessible only to users who are logged in.</li>
+                <li><strong>Implementation:</strong> The <code>PrivateRoute</code> component in our routing setup acts as a middleware to verify the presence of a valid JWT in the user's session. If the verification fails, the route redirects the user to the login page, thus safeguarding sensitive user interfaces.</li>
             </ul>
         </li>
         
         <li>
-            <h2>Environment Variables</h2>
+            <h4>Environment Variables</h4>
             <ul>
                 <li><strong>Purpose:</strong> Protects sensitive configuration options and credentials from being exposed in the source code.</li>
                 <li><strong>Implementation:</strong> We store critical information such as the database URI (<code>DB_URI</code>) and the JWT secret key (<code>JWT_SECRET</code>) in a <code>.env</code> file. This approach ensures that our application's configuration remains secure and can be easily modified without code changes.</li>
             </ul>
         </li>
         
-        <li>
-            <h2>Private Routes</h2>
-            <ul>
-                <li><strong>Purpose:</strong> Prevents unauthorized access to the main application page, ensuring that it is accessible only to users who are logged in.</li>
-                <li><strong>Implementation:</strong> The <code>PrivateRoute</code> component in our routing setup acts as a middleware to verify the presence of a valid JWT in the user's session. If the verification fails, the route redirects the user to the login page, thus safeguarding sensitive user interfaces.</li>
-            </ul>
-        </li>
+
     </ul>
 
     <p>These measures are part of our commitment to maintaining a secure and trustworthy environment for our users, ensuring that their financial information is protected from unauthorized access.</p>
